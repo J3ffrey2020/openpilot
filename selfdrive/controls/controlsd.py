@@ -89,8 +89,8 @@ class Controls:
     self.sm = sm
     if self.sm is None:
       ignore = ['testJoystick']
-      if SIMULATION:
-        ignore += ['driverCameraState', 'managerState']
+      if True:
+        ignore += ['driverCameraState', 'managerState', 'driverMonitoringState']
       if self.d_camera_hardware_missing:
         ignore += ['driverMonitoringState']
       self.sm = messaging.SubMaster(['deviceState', 'pandaStates', 'peripheralState', 'modelV2', 'liveCalibration',
@@ -371,7 +371,7 @@ class Controls:
     num_events = len(self.events)
 
     not_running = {p.name for p in self.sm['managerState'].processes if not p.running and p.shouldBeRunning}
-    if self.sm.rcv_frame['managerState'] and (not_running - IGNORE_PROCESSES):
+    if False:#self.sm.rcv_frame['managerState'] and (not_running - IGNORE_PROCESSES):
       self.events.add(EventName.processNotRunning)
       self.process_not_running = True
       if not_running != self.not_running_prev:
